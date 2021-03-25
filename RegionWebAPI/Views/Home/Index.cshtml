@@ -1,0 +1,35 @@
+﻿@Scripts.Render("~/bundles/jquery")
+
+<div class="container-fluid" style="margin-top: 2em">
+    <input type="text" name="name" id="RegionId" placeholder="RegionId" value="" />
+    <button id="getDataBtn">Get Data</button>
+    <div style="margin-top: 1em" id="listOfResponses">
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#getDataBtn").click(function () {
+            let regId = $('#RegionId').val();
+            let endpoint = 'http://localhost:52435/api/region/' + regId + '/employees';
+                $.ajax({
+                url: endpoint,
+                contentType: "application/json",
+                dataType: 'json',
+                    success: function (data) { 
+                        $('#listOfResponses').empty();
+                        data.emps.forEach(x =>
+                            $('#listOfResponses')
+                                .append('FullName: <input type="text" name="name" id="Tex' + x.Id +'" placeholder="RegionId" value="'+ x.FullName+'">')
+                            )
+                        
+                },
+                error: function (data) {
+                    alert("smth went wrong");
+                }
+            })
+        });
+    });
+</script>
